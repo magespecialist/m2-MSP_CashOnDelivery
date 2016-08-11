@@ -42,19 +42,38 @@ class Cashondelivery extends Template
     {
         $parent = $this->getParentBlock();
 
-        $this->_order = $parent->getOrder();
         $this->_source = $parent->getSource();
 
         $fee = new DataObject(
             [
                 'code' => 'msp_cashondelivery',
                 'strong' => false,
-                'value' => $this->getSource()->getMspCashOnDelivery(),
+                'value' => $this->getSource()->getBaseMspCodAmount() - $this->getSource()->getBaseMspCodTaxAmount(),
                 'label' => __('Cash on delivery'),
             ]
         );
 
+        $tax = new DataObject(
+            [
+                'code' => 'msp_cashondelivery_tax',
+                'strong' => false,
+                'value' => $this->getSource()->getBaseMspCodTaxAmount(),
+                'label' => __('Cash on delivery tax'),
+            ]
+        );
+
+        $total = new DataObject(
+            [
+                'code' => 'msp_cashondelivery_total',
+                'strong' => true,
+                'value' => $this->getSource()->getBaseMspCodAmount(),
+                'label' => __('Cash on delivery total'),
+            ]
+        );
+
         $parent->addTotal($fee, 'msp_cashondelivery');
+        $parent->addTotal($tax, 'msp_cashondelivery_tax');
+        $parent->addTotal($total, 'msp_cashondelivery_total');
 
         return $this;
     }

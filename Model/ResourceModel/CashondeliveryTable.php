@@ -106,7 +106,7 @@ class CashondeliveryTable extends AbstractDb
 
     /**
      * Get rows count
-     * 
+     *
      * @return int
      */
     public function getRowsCount()

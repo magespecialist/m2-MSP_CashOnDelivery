@@ -39,31 +39,36 @@ class InstallSchema implements InstallSchemaInterface
 
         $table = $setup->getConnection()
             ->newTable($tableName)
-            ->addColumn('msp_cashondelivery_table_id',
+            ->addColumn(
+                'msp_cashondelivery_table_id',
                 Table::TYPE_INTEGER,
                 null,
                 ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
                 'Entry ID'
             )
-            ->addColumn('country',
+            ->addColumn(
+                'country',
                 Table::TYPE_TEXT,
                 255,
                 [],
                 'Country'
             )
-            ->addColumn('from_amount',
+            ->addColumn(
+                'from_amount',
                 Table::TYPE_DECIMAL,
                 '10,4',
                 [],
                 'From amount'
             )
-            ->addColumn('fee',
+            ->addColumn(
+                'fee',
                 Table::TYPE_DECIMAL,
                 '10,4',
                 [],
                 'From amount'
             )
-            ->addColumn('is_pct',
+            ->addColumn(
+                'is_pct',
                 Table::TYPE_BOOLEAN,
                 null,
                 [],
@@ -80,7 +85,7 @@ class InstallSchema implements InstallSchemaInterface
     {
         $setup->startSetup();
 
-        //$this->_setupTable($setup, $context);
+        $this->_setupTable($setup, $context);
 
         $setup->endSetup();
     }

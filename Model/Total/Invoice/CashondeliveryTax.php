@@ -18,12 +18,13 @@
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-namespace MSP\CashOnDelivery\Model\Total\Quote;
+namespace MSP\CashOnDelivery\Model\Total\Invoice;
 
 use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Quote\Model\Quote\Address\Total;
 use Magento\Quote\Api\Data\ShippingAssignmentInterface;
 use Magento\Quote\Model\Quote;
+use Magento\Sales\Model\Order\Invoice;
 use MSP\CashOnDelivery\Api\CashondeliveryInterface;
 
 class CashondeliveryTax extends AbstractTotal
@@ -33,38 +34,17 @@ class CashondeliveryTax extends AbstractTotal
 
     public function __construct(
         PriceCurrencyInterface $priceCurrencyInterface,
-        CashondeliveryInterface $cashOnDeliveryInterface
+        CashondeliveryInterface $cashOnDeliveryInterface,
+        $data = []
     ) {
         $this->cashOnDeliveryInterface = $cashOnDeliveryInterface;
         $this->priceCurrencyInterface = $priceCurrencyInterface;
+
+        parent::__construct($data);
     }
 
-    public function collect(
-        Quote $quote,
-        ShippingAssignmentInterface $shippingAssignment,
-        Total $total
-    ) {
-        parent::collect($quote, $shippingAssignment, $total);
-
-        $feeAmount = $total->getBaseTotalAmount('msp_cashondelivery');
-
-        $baseAmount = $this->cashOnDeliveryInterface->getBaseTaxAmount($feeAmount);
-        $amount = $this->priceCurrencyInterface->convert($baseAmount);
-
-        $total->setBaseTotalAmount('msp_cashondelivery_tax', $baseAmount);
-        $total->setTotalAmount('msp_cashondelivery_tax', $amount);
-
-        $total->setBaseMspCodTaxAmount($baseAmount);
-        $total->setMspCodTaxAmount($amount);
-
-        if ($this->_canApplyTotal($quote)) {
-            $total->setBaseTaxAmount($total->getBaseTaxAmount() + $baseAmount);
-            $total->setTaxAmount($total->getTaxAmount() + $amount);
-
-            $total->setBaseGrandTotal($total->getBaseGrandTotal() + $baseAmount);
-            $total->setGrandTotal($total->getGrandTotal() + $amount);
-        }
-
+    public function collect(Invoice $invoice)
+    {
         return $this;
     }
 }

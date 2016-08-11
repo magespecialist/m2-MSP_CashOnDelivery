@@ -17,17 +17,22 @@
  * @copyright  Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-namespace MSP\CashOnDelivery\Model\ResourceModel\CashondeliveryTable;
 
-use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+namespace MSP\CashOnDelivery\Model\Total\Invoice;
 
-class Collection extends AbstractCollection
+use Magento\Sales\Model\Order\Total\AbstractTotal as MageAbstractTotal;
+use Magento\Quote\Model\Quote\Address\Total;
+use Magento\Quote\Model\Quote;
+
+abstract class AbstractTotal extends MageAbstractTotal
 {
-    protected function _construct()
+    /**
+     * Return true if can apply totals
+     * @param Quote $quote
+     * @return bool
+     */
+    protected function _canApplyTotal(Quote $quote)
     {
-        $this->_init(
-            'MSP\CashOnDelivery\Model\CashondeliveryTable',
-            'MSP\CashOnDelivery\Model\ResourceModel\CashondeliveryTable'
-        );
+        return ($quote->getPayment()->getMethod() == 'msp_cashondelivery');
     }
 }

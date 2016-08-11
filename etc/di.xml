@@ -33,8 +33,7 @@
         <plugin sortOrder="1" name="mSPCashOnDeliveryTotalsCollector"
                 type="MSP\CashOnDelivery\Plugin\Model\Quote\TotalsCollectorPlugin"/>
     </type>
-    <type name="Magento\Quote\Model\Quote\Address\ToOrder">
-        <plugin sortOrder="1" name="mSPCashOnDeliveryToOrder"
-                type="MSP\CashOnDelivery\Plugin\Model\Quote\Address\ToOrderPlugin"/>
-    </type>
+
+    <!--<virtualType name="MSP\CashOnDelivery\Model\Total\Creditmemo\Cashondelivery" type="MSP\CashOnDelivery\Model\Total\Invoice\Cashondelivery" />-->
+    <!--<virtualType name="MSP\CashOnDelivery\Model\Total\Creditmemo\CashondeliveryTax" type="MSP\CashOnDelivery\Model\Total\Invoice\CashondeliveryTax" />-->
 </config>

@@ -18,12 +18,13 @@
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-namespace MSP\CashOnDelivery\Model\Total\Quote;
+namespace MSP\CashOnDelivery\Model\Total\Invoice;
 
 use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Quote\Model\Quote\Address\Total;
 use Magento\Quote\Api\Data\ShippingAssignmentInterface;
 use Magento\Quote\Model\Quote;
+use Magento\Sales\Model\Order\Invoice;
 use MSP\CashOnDelivery\Api\CashondeliveryInterface;
 
 class Cashondelivery extends AbstractTotal
@@ -33,44 +34,26 @@ class Cashondelivery extends AbstractTotal
 
     public function __construct(
         PriceCurrencyInterface $priceCurrencyInterface,
-        CashondeliveryInterface $cashOnDeliveryInterface
+        CashondeliveryInterface $cashOnDeliveryInterface,
+        $data = []
     ) {
         $this->cashOnDeliveryInterface = $cashOnDeliveryInterface;
         $this->priceCurrencyInterface = $priceCurrencyInterface;
+
+        parent::__construct($data);
     }
 
-    public function collect(
-        Quote $quote,
-        ShippingAssignmentInterface $shippingAssignment,
-        Total $total
-    ) {
-        parent::collect($quote, $shippingAssignment, $total);
-
-        $country = $quote->getShippingAddress()->getCountryModel()->getData('iso2_code');
-
-        $baseAmount = $this->cashOnDeliveryInterface->getBaseAmount($total->getAllBaseTotalAmounts(), $country);
-        $amount = $this->priceCurrencyInterface->convert($baseAmount);
-
-        $total->setBaseTotalAmount('msp_cashondelivery', $baseAmount);
-        $total->setTotalAmount('msp_cashondelivery', $amount);
-
-        $total->setBaseMspCodAmount($baseAmount);
-        $total->setMspCodAmount($amount);
-
-        if ($this->_canApplyTotal($quote)) {
-            $total->setBaseGrandTotal($total->getBaseGrandTotal() + $baseAmount);
-            $total->setGrandTotal($total->getGrandTotal() + $amount);
-        }
-
+    public function collect(Invoice $invoice)
+    {
         return $this;
     }
 
-    public function fetch(Quote $quote, Total $total)
+    public function fetch()
     {
         return [
             'code' => 'msp_cashondelivery',
             'title' => 'Cash On Delivery',
-            'value' => $this->_canApplyTotal($quote) ? $total->getMspCodAmount() : 0,
+            'value' => 0,
         ];
     }
 

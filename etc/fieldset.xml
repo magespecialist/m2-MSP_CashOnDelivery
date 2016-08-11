@@ -20,8 +20,21 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
-    <extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
-        <attribute code="msp_cod_amount" type="decimal" />
-    </extension_attributes>
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:DataObject/etc/fieldset.xsd">
+    <scope id="global">
+        <fieldset id="sales_convert_quote">
+            <field name="msp_cod_amount">
+                <aspect name="to_order" />
+            </field>
+            <field name="base_msp_cod_amount">
+                <aspect name="to_order" />
+            </field>
+            <field name="msp_cod_tax_amount">
+                <aspect name="to_order" />
+            </field>
+            <field name="base_msp_cod_tax_amount">
+                <aspect name="to_order" />
+            </field>
+        </fieldset>
+    </scope>
 </config>

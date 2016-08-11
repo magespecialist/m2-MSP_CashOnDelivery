@@ -26,7 +26,6 @@ use Magento\Framework\Data\Form\Element\Factory;
 use Magento\Framework\Data\Form\Element\CollectionFactory;
 use MSP\CashOnDelivery\Api\CashondeliveryTableInterface;
 
-
 class Import extends AbstractElement
 {
     protected $cashondeliveryTableInterface;

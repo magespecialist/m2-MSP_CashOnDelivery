@@ -73,7 +73,7 @@ class CashondeliveryTable extends AbstractModel implements CashondeliveryTableIn
 
     /**
      * Get table as array
-     * 
+     *
      * @return array
      */
     public function getTableAsArray()
@@ -139,7 +139,6 @@ class CashondeliveryTable extends AbstractModel implements CashondeliveryTableIn
 
         $rowNumber = 0;
         while (false !== ($csvLine = $stream->readCsv())) {
-
             if (empty($csvLine)) {
                 continue;
             }
@@ -152,16 +151,13 @@ class CashondeliveryTable extends AbstractModel implements CashondeliveryTableIn
             for ($i=0; $i<count($headers); $i++) {
             // @codingStandardsIgnoreEnd
                 foreach ($this->_columns as $columnName) {
-
                     $value = $csvLine[$columnsMap[$columnName]];
 
                     if ($columnName == 'fee') {
                         $dataRow['is_pct'] = (strpos($value, '%') !== false);
                         $value = floatval(str_replace('%', '', $value));
-
                     } else if ($columnName == 'from_amount') {
                         $value = floatval($value);
-
                     }
 
                     $dataRow[$columnName] = $value;

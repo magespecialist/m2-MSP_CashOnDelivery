@@ -28,9 +28,10 @@ define(
         'Magento_Checkout/js/model/url-builder',
         'mage/url',
         'Magento_Checkout/js/model/full-screen-loader',
-        'MSP_CashOnDelivery/js/view/checkout/cashondelivery'
+        'MSP_CashOnDelivery/js/view/checkout/cashondelivery',
+        'Magento_Customer/js/model/customer'
     ],
-    function (ko, $, storage, Component, quote, getTotalsAction, urlBuilder, mageUrlBuilder, fullScreenLoader, cashondelivery) {
+    function (ko, $, storage, Component, quote, getTotalsAction, urlBuilder, mageUrlBuilder, fullScreenLoader, cashondelivery, customer) {
         'use strict';
         return Component.extend({
             defaults: {
@@ -39,10 +40,21 @@ define(
             lastDetectedMethod: null,
             extraFeeText: ko.observable(''),
             refreshMethod: function () {
+                var serviceUrl;
+
                 fullScreenLoader.startLoader();
 
                 var paymentData = quote.paymentMethod();
-                var serviceUrl = urlBuilder.createUrl('/carts/mine/selected-payment-method', {});
+                
+                if(customer.isLoggedIn()) {
+                    serviceUrl = urlBuilder.createUrl('/carts/mine/selected-payment-method', {});
+                }
+                else {
+                    serviceUrl = urlBuilder.createUrl('/guest-carts/:cartId/selected-payment-method', {
+                        cartId: quote.getQuoteId()
+                    });
+                }
+
                 var payload = {
                     cartId: quote.getQuoteId(),
                     method: paymentData

@@ -23,6 +23,8 @@ namespace MSP\CashOnDelivery\Model;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Tax\Api\TaxCalculationInterface;
+use Magento\Tax\Helper\Data as TaxHelper;
 use MSP\CashOnDelivery\Api\CashondeliveryInterface;
 use MSP\CashOnDelivery\Api\CashondeliveryTableInterface;
 
@@ -32,15 +34,21 @@ class Cashondelivery implements CashondeliveryInterface
     protected $cashondeliveryDetailsInterface;
     protected $objectManagerInterface;
     protected $cashondeliveryTableInterface;
+    protected $taxHelper;
+    protected $taxCalculation;
 
     public function __construct(
         ScopeConfigInterface $scopeConfigInterface,
         ObjectManagerInterface $objectManagerInterface,
-        CashondeliveryTableInterface $cashondeliveryTableInterface
+        CashondeliveryTableInterface $cashondeliveryTableInterface,
+        TaxHelper $taxHelper,
+        TaxCalculationInterface $taxCalculationInterface
     ) {
         $this->scopeConfigInterface = $scopeConfigInterface;
         $this->objectManagerInterface = $objectManagerInterface;
         $this->cashondeliveryTableInterface = $cashondeliveryTableInterface;
+        $this->taxHelper = $taxHelper;
+        $this->taxCalculation = $taxCalculationInterface;
     }
 
     /**
@@ -79,8 +87,7 @@ class Cashondelivery implements CashondeliveryInterface
         $usedTotals = $this->getUsedTotals();
 
         $calcBase = 0;
-        foreach ($totals as $totalCode => $total)
-        {
+        foreach ($totals as $totalCode => $total) {
             if (!in_array($totalCode, $usedTotals)) {
                 continue;
             }
@@ -114,7 +121,9 @@ class Cashondelivery implements CashondeliveryInterface
      */
     public function getBaseTaxAmount($amount)
     {
-        return $amount * 0.22;
+        $rate = $this->getShippingTaxRate();
+
+        return $amount * ($rate / 100);
     }
 
     /**
@@ -124,5 +133,15 @@ class Cashondelivery implements CashondeliveryInterface
     public function getCartInformation()
     {
         return $this->objectManagerInterface->get('MSP\CashOnDelivery\Api\CashondeliveryCartInterface');
+    }
+
+
+    /**
+     * @return \Magento\Tax\Api\Data\TaxRateInterface
+     */
+    protected function getShippingTaxRate()
+    {
+        $id = $this->taxHelper->getShippingTaxClass(null);
+        return $this->taxCalculation->getCalculatedRate($id);
     }
 }
