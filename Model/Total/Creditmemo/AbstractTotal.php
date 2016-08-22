@@ -18,9 +18,9 @@
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-namespace MSP\CashOnDelivery\Model\Total\Invoice;
+namespace MSP\CashOnDelivery\Model\Total\Creditmemo;
 
-use Magento\Sales\Model\Order\Invoice\Total\AbstractTotal as MageAbstractTotal;
+use Magento\Sales\Model\Order\Creditmemo\Total\AbstractTotal as MageAbstractTotal;
 use Magento\Sales\Model\Order;
 
 abstract class AbstractTotal extends MageAbstractTotal

@@ -18,7 +18,7 @@
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-namespace MSP\CashOnDelivery\Block\Sales\Order;
+namespace MSP\CashOnDelivery\Block\Sales;
 
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\DataObject;
@@ -53,27 +53,7 @@ class Cashondelivery extends Template
             ]
         );
 
-        $tax = new DataObject(
-            [
-                'code' => 'msp_cashondelivery_tax',
-                'strong' => false,
-                'value' => $this->getSource()->getBaseMspCodTaxAmount(),
-                'label' => __('Cash on delivery tax'),
-            ]
-        );
-
-        $total = new DataObject(
-            [
-                'code' => 'msp_cashondelivery_total',
-                'strong' => true,
-                'value' => $this->getSource()->getBaseMspCodAmount(),
-                'label' => __('Cash on delivery total'),
-            ]
-        );
-
         $parent->addTotal($fee, 'msp_cashondelivery');
-        $parent->addTotal($tax, 'msp_cashondelivery_tax');
-        $parent->addTotal($total, 'msp_cashondelivery_total');
 
         return $this;
     }

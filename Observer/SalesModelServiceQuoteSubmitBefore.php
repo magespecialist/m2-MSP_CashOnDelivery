@@ -18,11 +18,12 @@
 
 namespace MSP\CashOnDelivery\Observer;
 
+use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Model\QuoteRepository;
 use Magento\Sales\Api\Data\OrderInterface;
 
-class Observer implements ObserverInterface
+class SalesModelServiceQuoteSubmitBefore implements ObserverInterface
 {
     protected $quoteRepository;
 
@@ -34,10 +35,10 @@ class Observer implements ObserverInterface
     }
 
     /**
-     * @param \Magento\Framework\Event\Observer $observer
+     * @param Observer $observer
      * @return void
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function execute(Observer $observer)
     {
         /** @var OrderInterface $order */
         $order = $observer->getEvent()->getOrder();

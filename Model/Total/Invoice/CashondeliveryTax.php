@@ -20,31 +20,19 @@
 
 namespace MSP\CashOnDelivery\Model\Total\Invoice;
 
-use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Quote\Model\Quote\Address\Total;
-use Magento\Quote\Api\Data\ShippingAssignmentInterface;
 use Magento\Quote\Model\Quote;
 use Magento\Sales\Model\Order\Invoice;
-use MSP\CashOnDelivery\Api\CashondeliveryInterface;
 
 class CashondeliveryTax extends AbstractTotal
 {
-    protected $cashOnDeliveryInterface;
-    protected $priceCurrencyInterface;
-
-    public function __construct(
-        PriceCurrencyInterface $priceCurrencyInterface,
-        CashondeliveryInterface $cashOnDeliveryInterface,
-        $data = []
-    ) {
-        $this->cashOnDeliveryInterface = $cashOnDeliveryInterface;
-        $this->priceCurrencyInterface = $priceCurrencyInterface;
-
-        parent::__construct($data);
-    }
-
     public function collect(Invoice $invoice)
     {
+        $order = $invoice->getOrder();
+
+        $invoice->setMspCodTaxAmount($order->getMspCodTaxAmount());
+        $invoice->setBaseMspCodTaxAmount($order->getBaseMspCodTaxAmount());
+
         return $this;
     }
 }

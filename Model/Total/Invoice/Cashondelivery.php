@@ -20,45 +20,24 @@
 
 namespace MSP\CashOnDelivery\Model\Total\Invoice;
 
-use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Quote\Model\Quote\Address\Total;
-use Magento\Quote\Api\Data\ShippingAssignmentInterface;
 use Magento\Quote\Model\Quote;
 use Magento\Sales\Model\Order\Invoice;
-use MSP\CashOnDelivery\Api\CashondeliveryInterface;
 
 class Cashondelivery extends AbstractTotal
 {
-    protected $cashOnDeliveryInterface;
-    protected $priceCurrencyInterface;
-
-    public function __construct(
-        PriceCurrencyInterface $priceCurrencyInterface,
-        CashondeliveryInterface $cashOnDeliveryInterface,
-        $data = []
-    ) {
-        $this->cashOnDeliveryInterface = $cashOnDeliveryInterface;
-        $this->priceCurrencyInterface = $priceCurrencyInterface;
-
-        parent::__construct($data);
-    }
-
     public function collect(Invoice $invoice)
     {
+        $order = $invoice->getOrder();
+
+        $invoice->setMspCodAmount($order->getMspCodAmount());
+        $invoice->setBaseMspCodAmount($order->getBaseMspCodAmount());
+
+        if ($this->_canApplyTotal($order)) {
+            $invoice->setGrandTotal($invoice->getGrandTotal() + $invoice->getMspCodAmount());
+            $invoice->setBaseGrandTotal($invoice->getBaseGrandTotal() + $invoice->getBaseMspCodAmount());
+        }
+
         return $this;
-    }
-
-    public function fetch()
-    {
-        return [
-            'code' => 'msp_cashondelivery',
-            'title' => 'Cash On Delivery',
-            'value' => 0,
-        ];
-    }
-
-    public function getLabel()
-    {
-        return __('Cash On Delivery');
     }
 }

@@ -33,10 +33,11 @@
             <item name="msp_cashondelivery_tax" instance="MSP\CashOnDelivery\Model\Total\Invoice\CashondeliveryTax" sort_order="1001"/>
         </group>
     </section>
+
     <section name="order_creditmemo">
         <group name="totals">
             <item name="msp_cashondelivery" instance="MSP\CashOnDelivery\Model\Total\Creditmemo\Cashondelivery" sort_order="1000"/>
-            <item name="msp_cashondelivery_tax" instance="MSP\CashOnDelivery\Model\Total\Creditmemo\CashondeliveryTax" sort_order="1001"/>
+            <item name="msp_cashondelivery_tax" instance="MSP\CashOnDelivery\Model\Total\Creditmemo\CashondeliveryTax" sort_order="1000"/>
         </group>
     </section>
 </config>

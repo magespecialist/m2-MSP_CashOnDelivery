@@ -1,4 +1,5 @@
-<?php
+<?xml version="1.0"?>
+<!--
 /**
  * IDEALIAGroup srl
  *
@@ -17,21 +18,11 @@
  * @copyright  Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
-namespace MSP\CashOnDelivery\Model\Total\Invoice;
-
-use Magento\Sales\Model\Order\Invoice\Total\AbstractTotal as MageAbstractTotal;
-use Magento\Sales\Model\Order;
-
-abstract class AbstractTotal extends MageAbstractTotal
-{
-    /**
-     * Return true if can apply totals
-     * @param Order $order
-     * @return bool
-     */
-    protected function _canApplyTotal(Order $order)
-    {
-        return ($order->getPayment()->getMethod() == 'msp_cashondelivery');
-    }
-}
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="creditmemo_totals">
+            <block class="MSP\CashOnDelivery\Block\Sales\Cashondelivery" name="msp_cashondelivery" before="tax"/>
+        </referenceBlock>
+    </body>
+</page>

@@ -28,13 +28,15 @@ class TotalsCollectorPlugin
         $total = $procede($quote);
 
         foreach ($quote->getAllAddresses() as $address) {
-            $addressTotal = $subject->collectAddressTotals($quote, $address);
+            if ($address->getAddressType() == Quote\Address::ADDRESS_TYPE_SHIPPING) {
+                $addressTotal = $subject->collectAddressTotals($quote, $address);
 
-            $total->setMspCodAmount($addressTotal->getMspCodAmount());
-            $total->setBaseMspCodAmount($addressTotal->getBaseMspCodAmount());
+                $total->setMspCodAmount($addressTotal->getMspCodAmount());
+                $total->setBaseMspCodAmount($addressTotal->getBaseMspCodAmount());
 
-            $total->setMspCodTaxAmount($addressTotal->getMspCodTaxAmount());
-            $total->setBaseMspCodTaxAmount($addressTotal->getBaseMspCodTaxAmount());
+                $total->setMspCodTaxAmount($addressTotal->getMspCodTaxAmount());
+                $total->setBaseMspCodTaxAmount($addressTotal->getBaseMspCodTaxAmount());
+            }
         }
 
         return $total;

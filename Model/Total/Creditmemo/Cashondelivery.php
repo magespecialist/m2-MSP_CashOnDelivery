@@ -18,20 +18,26 @@
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-namespace MSP\CashOnDelivery\Model\Total\Invoice;
+namespace MSP\CashOnDelivery\Model\Total\Creditmemo;
 
-use Magento\Sales\Model\Order\Invoice\Total\AbstractTotal as MageAbstractTotal;
-use Magento\Sales\Model\Order;
+use Magento\Quote\Model\Quote\Address\Total;
+use Magento\Quote\Model\Quote;
+use Magento\Sales\Model\Order\Creditmemo;
 
-abstract class AbstractTotal extends MageAbstractTotal
+class Cashondelivery extends AbstractTotal
 {
-    /**
-     * Return true if can apply totals
-     * @param Order $order
-     * @return bool
-     */
-    protected function _canApplyTotal(Order $order)
+    public function collect(Creditmemo $creditmemo)
     {
-        return ($order->getPayment()->getMethod() == 'msp_cashondelivery');
+        $order = $creditmemo->getOrder();
+
+        $creditmemo->setMspCodAmount($order->getMspCodAmount());
+        $creditmemo->setBaseMspCodAmount($order->getBaseMspCodAmount());
+
+        if ($this->_canApplyTotal($order)) {
+            $creditmemo->setGrandTotal($creditmemo->getGrandTotal() + $creditmemo->getMspCodAmount());
+            $creditmemo->setBaseGrandTotal($creditmemo->getBaseGrandTotal() + $creditmemo->getBaseMspCodAmount());
+        }
+
+        return $this;
     }
 }
