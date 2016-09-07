@@ -44,20 +44,20 @@ class CashondeliveryTax extends AbstractTotal
         ShippingAssignmentInterface $shippingAssignment,
         Total $total
     ) {
-        parent::collect($quote, $shippingAssignment, $total);
+        //parent::collect($quote, $shippingAssignment, $total);
 
         $feeAmount = $total->getBaseTotalAmount('msp_cashondelivery');
 
         $baseAmount = $this->cashOnDeliveryInterface->getBaseTaxAmount($feeAmount);
         $amount = $this->priceCurrencyInterface->convert($baseAmount);
 
-        $total->setBaseTotalAmount('msp_cashondelivery_tax', $baseAmount);
-        $total->setTotalAmount('msp_cashondelivery_tax', $amount);
-
-        $total->setBaseMspCodTaxAmount($baseAmount);
-        $total->setMspCodTaxAmount($amount);
-
         if ($this->_canApplyTotal($quote)) {
+            $total->setBaseTotalAmount('msp_cashondelivery_tax', $baseAmount);
+            $total->setTotalAmount('msp_cashondelivery_tax', $amount);
+
+            $total->setBaseMspCodTaxAmount($baseAmount);
+            $total->setMspCodTaxAmount($amount);
+
             $total->setBaseTaxAmount($total->getBaseTaxAmount() + $baseAmount);
             $total->setTaxAmount($total->getTaxAmount() + $amount);
 

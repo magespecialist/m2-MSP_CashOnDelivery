@@ -44,20 +44,20 @@ class Cashondelivery extends AbstractTotal
         ShippingAssignmentInterface $shippingAssignment,
         Total $total
     ) {
-        parent::collect($quote, $shippingAssignment, $total);
+        //parent::collect($quote, $shippingAssignment, $total);
 
         $country = $quote->getShippingAddress()->getCountryModel()->getData('iso2_code');
 
         $baseAmount = $this->cashOnDeliveryInterface->getBaseAmount($total->getAllBaseTotalAmounts(), $country);
         $amount = $this->priceCurrencyInterface->convert($baseAmount);
 
-        $total->setBaseTotalAmount('msp_cashondelivery', $baseAmount);
-        $total->setTotalAmount('msp_cashondelivery', $amount);
-
-        $total->setBaseMspCodAmount($baseAmount);
-        $total->setMspCodAmount($amount);
-
         if ($this->_canApplyTotal($quote)) {
+            $total->setBaseTotalAmount('msp_cashondelivery', $baseAmount);
+            $total->setTotalAmount('msp_cashondelivery', $amount);
+
+            $total->setBaseMspCodAmount($baseAmount);
+            $total->setMspCodAmount($amount);
+
             $total->setBaseGrandTotal($total->getBaseGrandTotal() + $baseAmount);
             $total->setGrandTotal($total->getGrandTotal() + $amount);
         }

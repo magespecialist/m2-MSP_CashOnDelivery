@@ -42,9 +42,12 @@ define(
             refreshMethod: function () {
                 var serviceUrl;
 
-                fullScreenLoader.startLoader();
-
                 var paymentData = quote.paymentMethod();
+                if (paymentData['method'] === 'free') {
+                    return;
+                }
+
+                fullScreenLoader.startLoader();
                 
                 if(customer.isLoggedIn()) {
                     serviceUrl = urlBuilder.createUrl('/carts/mine/selected-payment-method', {});

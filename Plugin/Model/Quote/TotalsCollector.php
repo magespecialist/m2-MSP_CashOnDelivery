@@ -21,24 +21,36 @@ namespace MSP\CashOnDelivery\Plugin\Model\Quote;
 
 use Magento\Quote\Model\Quote;
 
-class TotalsCollectorPlugin
+class TotalsCollector
 {
-    public function aroundCollect(Quote\TotalsCollector $subject, \Closure $procede, Quote $quote)
-    {
-        $total = $procede($quote);
+    /**
+     * Reset quote COD amount
+     *
+     * @param \Magento\Quote\Model\Quote\TotalsCollector $subject
+     * @param Quote $quote
+     *
+     * @return void
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function beforeCollect(
+        \Magento\Quote\Model\Quote\TotalsCollector $subject,
+        Quote $quote
+    ) {
+        $quote->setMspCodAmount(0);
+        $quote->setBaseMspCodAmount(0);
+
+        $quote->setMspCodTaxAmount(0);
+        $quote->setBaseMspCodTaxAmount(0);
 
         foreach ($quote->getAllAddresses() as $address) {
             if ($address->getAddressType() == Quote\Address::ADDRESS_TYPE_SHIPPING) {
-                $addressTotal = $subject->collectAddressTotals($quote, $address);
 
-                $total->setMspCodAmount($addressTotal->getMspCodAmount());
-                $total->setBaseMspCodAmount($addressTotal->getBaseMspCodAmount());
+                $address->setMspCodAmount(0);
+                $address->setBaseMspCodAmount(0);
 
-                $total->setMspCodTaxAmount($addressTotal->getMspCodTaxAmount());
-                $total->setBaseMspCodTaxAmount($addressTotal->getBaseMspCodTaxAmount());
+                $address->setMspCodTaxAmount(0);
+                $address->setBaseMspCodTaxAmount(0);
             }
         }
-
-        return $total;
     }
 }
