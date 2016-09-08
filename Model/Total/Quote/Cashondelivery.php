@@ -37,6 +37,7 @@ class Cashondelivery extends AbstractTotal
     ) {
         $this->cashOnDeliveryInterface = $cashOnDeliveryInterface;
         $this->priceCurrencyInterface = $priceCurrencyInterface;
+        $this->setCode('msp_cashondelivery');
     }
 
     public function collect(
@@ -69,7 +70,7 @@ class Cashondelivery extends AbstractTotal
     {
         return [
             'code' => 'msp_cashondelivery',
-            'title' => 'Cash On Delivery',
+            'title' => __('Cash On Delivery'),
             'value' => $this->_canApplyTotal($quote) ? $total->getMspCodAmount() : 0,
         ];
     }
