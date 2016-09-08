@@ -29,9 +29,6 @@ define(
         return Component.extend({
             isDisplayed: function () {
                 return this.isFullMode();
-            },
-            canShowTotal: function () {
-                return cashondelivery.canShowCashOnDelivery;
             }
         });
     }

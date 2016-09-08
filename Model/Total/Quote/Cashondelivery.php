@@ -69,7 +69,7 @@ class Cashondelivery extends AbstractTotal
     public function fetch(Quote $quote, Total $total)
     {
         return [
-            'code' => 'msp_cashondelivery',
+            'code' => $this->getCode(),
             'title' => __('Cash On Delivery'),
             'value' => $this->_canApplyTotal($quote) ? $total->getMspCodAmount() : 0,
         ];

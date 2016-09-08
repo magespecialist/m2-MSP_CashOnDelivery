@@ -59,6 +59,14 @@ define(
                     price = totals.getSegment('msp_cashondelivery').value;
                 }
                 return this.getFormattedPrice(price);
+            },
+            shouldDisplay: function () {
+                var price = 0;
+                if (this.hasTotal()) {
+                    price = totals.getSegment('msp_cashondelivery').value;
+                }
+
+                return price;
             }
         });
     }

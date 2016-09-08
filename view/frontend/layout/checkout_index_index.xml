@@ -34,10 +34,9 @@
                                                 <item name="totals" xsi:type="array">
                                                     <item name="children" xsi:type="array">
                                                         <item name="msp_cashondelivery" xsi:type="array">
-                                                            <item name="component"  xsi:type="string">MSP_CashOnDelivery/js/view/checkout/cart/totals/cashondelivery</item>
-                                                            <item name="sortOrder" xsi:type="string">20</item>
+                                                            <item name="component"  xsi:type="string">MSP_CashOnDelivery/js/view/checkout/summary/cashondelivery</item>
+                                                            <item name="sortOrder" xsi:type="string">35</item>
                                                             <item name="config" xsi:type="array">
-                                                                <item name="template" xsi:type="string">MSP_CashOnDelivery/checkout/cart/totals/cashondelivery</item>
                                                                 <item name="title" xsi:type="string" translate="true">Cash on delivery</item>
                                                             </item>
                                                         </item>
@@ -47,7 +46,6 @@
                                         </item>
                                     </item>
                                 </item>
-
                                 <item name="steps" xsi:type="array">
                                     <item name="children" xsi:type="array">
                                         <item name="billing-step" xsi:type="array">
