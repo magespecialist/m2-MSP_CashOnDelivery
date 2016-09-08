@@ -72,6 +72,7 @@ define(
                 });
             },
             initObservable: function () {
+                this._super();
                 var me = this;
 
                 var serviceUrl = urlBuilder.createUrl('/carts/mine/msp-cashondelivery-information', {});
