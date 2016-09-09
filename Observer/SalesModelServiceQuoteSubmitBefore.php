@@ -25,15 +25,6 @@ use Magento\Sales\Api\Data\OrderInterface;
 
 class SalesModelServiceQuoteSubmitBefore implements ObserverInterface
 {
-    protected $quoteRepository;
-
-    public function __construct(
-        QuoteRepository $quoteRepository
-    ) {
-
-        $this->quoteRepository = $quoteRepository;
-    }
-
     /**
      * @param Observer $observer
      * @return void

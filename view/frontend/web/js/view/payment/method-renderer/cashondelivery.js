@@ -29,9 +29,10 @@ define(
         'mage/url',
         'Magento_Checkout/js/model/full-screen-loader',
         'MSP_CashOnDelivery/js/view/checkout/cashondelivery',
-        'Magento_Customer/js/model/customer'
+        'Magento_Customer/js/model/customer',
+        'Magento_Checkout/js/model/totals'
     ],
-    function (ko, $, storage, Component, quote, getTotalsAction, urlBuilder, mageUrlBuilder, fullScreenLoader, cashondelivery, customer) {
+    function (ko, $, storage, Component, quote, getTotalsAction, urlBuilder, mageUrlBuilder, fullScreenLoader, cashondelivery, customer, totals) {
         'use strict';
         return Component.extend({
             defaults: {
@@ -86,8 +87,8 @@ define(
                     if (quote.paymentMethod().method != me.lastDetectedMethod) {
 
                         if (
-                            (quote.paymentMethod().method == 'msp_cashondelivery') ||
-                            (me.lastDetectedMethod == 'msp_cashondelivery')
+                            (quote.paymentMethod().method == 'msp_cashondelivery' || me.lastDetectedMethod == 'msp_cashondelivery')
+                            || (totals.getSegment('msp_cashondelivery') && me.lastDetectedMethod === null)
                         ) {
                             me.refreshMethod();
                         }
