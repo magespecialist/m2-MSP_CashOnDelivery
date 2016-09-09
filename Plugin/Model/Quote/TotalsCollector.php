@@ -41,16 +41,5 @@ class TotalsCollector
 
         $quote->setMspCodTaxAmount(0);
         $quote->setBaseMspCodTaxAmount(0);
-
-        foreach ($quote->getAllAddresses() as $address) {
-            if ($address->getAddressType() == Quote\Address::ADDRESS_TYPE_SHIPPING) {
-
-                $address->setMspCodAmount(0);
-                $address->setBaseMspCodAmount(0);
-
-                $address->setMspCodTaxAmount(0);
-                $address->setBaseMspCodTaxAmount(0);
-            }
-        }
     }
 }

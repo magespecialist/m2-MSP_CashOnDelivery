@@ -25,6 +25,7 @@ use Magento\Quote\Model\Quote\Address\Total;
 use Magento\Quote\Api\Data\ShippingAssignmentInterface;
 use Magento\Quote\Model\Quote;
 use MSP\CashOnDelivery\Api\CashondeliveryInterface;
+use Magento\Quote\Model\Quote\Address;
 
 class Cashondelivery extends AbstractTotal
 {
@@ -45,7 +46,11 @@ class Cashondelivery extends AbstractTotal
         ShippingAssignmentInterface $shippingAssignment,
         Total $total
     ) {
-        //parent::collect($quote, $shippingAssignment, $total);
+        if ($shippingAssignment->getShipping()->getAddress()->getAddressType() != Address::TYPE_SHIPPING
+            || $quote->isVirtual()
+        ) {
+            return $this;
+        }
 
         $country = $quote->getShippingAddress()->getCountryModel()->getData('iso2_code');
 
@@ -61,6 +66,9 @@ class Cashondelivery extends AbstractTotal
 
             $total->setBaseGrandTotal($total->getBaseGrandTotal() + $baseAmount);
             $total->setGrandTotal($total->getGrandTotal() + $amount);
+
+            $quote->setBaseMspCodAmount($baseAmount);
+            $quote->setMspCodAmount($amount);
         }
 
         return $this;
@@ -68,11 +76,15 @@ class Cashondelivery extends AbstractTotal
 
     public function fetch(Quote $quote, Total $total)
     {
-        return [
-            'code' => $this->getCode(),
-            'title' => __('Cash On Delivery'),
-            'value' => $this->_canApplyTotal($quote) ? $total->getMspCodAmount() : 0,
-        ];
+        if ($this->_canApplyTotal($quote)) {
+            return [
+                'code' => $this->getCode(),
+                'title' => __('Cash On Delivery'),
+                'value' => $total->getMspCodAmount(),
+            ];
+        }
+
+        return null;
     }
 
     public function getLabel()

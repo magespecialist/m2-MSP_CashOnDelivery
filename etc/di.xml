@@ -31,7 +31,8 @@
 
 
     <type name ="Magento\Quote\Model\Quote\TotalsCollector">
-        <plugin name="mSPCashOnDeliveryTotalsCollectorReset" type="MSP\CashOnDelivery\Plugin\Model\Quote\TotalsCollector" />
+        <plugin name="mSPCashOnDeliveryTotalsCollectorReset"
+                type="MSP\CashOnDelivery\Plugin\Model\Quote\TotalsCollector" />
     </type>
 
     <!--<virtualType name="MSP\CashOnDelivery\Model\Total\Creditmemo\Cashondelivery" type="MSP\CashOnDelivery\Model\Total\Invoice\Cashondelivery" />-->

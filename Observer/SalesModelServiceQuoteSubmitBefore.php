@@ -42,8 +42,7 @@ class SalesModelServiceQuoteSubmitBefore implements ObserverInterface
     {
         /** @var OrderInterface $order */
         $order = $observer->getEvent()->getOrder();
-
-        $quote = $this->quoteRepository->get($order->getQuoteId());
+        $quote = $observer->getEvent()->getQuote();
 
         if ($order->getPayment()->getMethod() == 'msp_cashondelivery') {
             $order->setMspCodAmount($quote->getMspCodAmount());

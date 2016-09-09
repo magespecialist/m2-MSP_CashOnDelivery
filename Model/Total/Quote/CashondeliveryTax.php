@@ -25,6 +25,7 @@ use Magento\Quote\Model\Quote\Address\Total;
 use Magento\Quote\Api\Data\ShippingAssignmentInterface;
 use Magento\Quote\Model\Quote;
 use MSP\CashOnDelivery\Api\CashondeliveryInterface;
+use Magento\Quote\Model\Quote\Address;
 
 class CashondeliveryTax extends AbstractTotal
 {
@@ -44,7 +45,11 @@ class CashondeliveryTax extends AbstractTotal
         ShippingAssignmentInterface $shippingAssignment,
         Total $total
     ) {
-        //parent::collect($quote, $shippingAssignment, $total);
+        if ($shippingAssignment->getShipping()->getAddress()->getAddressType() != Address::TYPE_SHIPPING
+            || $quote->isVirtual()
+        ) {
+            return $this;
+        }
 
         $feeAmount = $total->getBaseTotalAmount('msp_cashondelivery');
 
@@ -63,6 +68,9 @@ class CashondeliveryTax extends AbstractTotal
 
             $total->setBaseGrandTotal($total->getBaseGrandTotal() + $baseAmount);
             $total->setGrandTotal($total->getGrandTotal() + $amount);
+
+            $quote->setBaseMspCodTaxAmount($baseAmount);
+            $quote->setMspCodTaxAmount($amount);
         }
 
         return $this;
