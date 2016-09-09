@@ -23,6 +23,8 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:DataObject/etc/fieldset.xsd">
 
     <!-- TODO: Does it really work? -->
+    <!-- See: https://github.com/magento/magento2/issues/5823 -->
+    <!-- Workaround is in observer sales_model_service_quote_submit_before -->
     <scope id="global">
         <fieldset id="sales_convert_quote">
             <field name="msp_cod_amount">
