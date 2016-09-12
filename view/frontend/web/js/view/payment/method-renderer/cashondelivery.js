@@ -44,8 +44,13 @@ define(
                 var serviceUrl;
 
                 var paymentData = quote.paymentMethod();
+
+                // In case of "free" method, we'll have to make sure we don't send title to the backend,
+                // otherwise it will fail. Perhaps there is better way to do this, as this might happen with other methods too.
                 if (paymentData['method'] === 'free') {
-                    return;
+                    // get copy of paymentData object, so we don't change the original
+                    paymentData = JSON.parse(JSON.stringify(paymentData));
+                    delete paymentData['title'];
                 }
 
                 fullScreenLoader.startLoader();
