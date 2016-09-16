@@ -20,36 +20,40 @@
 
 namespace MSP\CashOnDelivery\Model;
 
-use Magento\Checkout\Model\Cart as MageCart;
+use \Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\Pricing\PriceCurrencyInterface;
 use MSP\CashOnDelivery\Api\CashondeliveryCartInterface;
+use MSP\CashOnDelivery\Api\CashondeliveryInterface;
 
 class CashondeliveryCart implements CashondeliveryCartInterface
 {
     protected $priceCurrencyInterface;
-    protected $cart;
-    protected $_quote = null;
+    protected $checkoutSession;
+    protected $cashondeliveryInterface;
+    protected $quote = null;
 
     public function __construct(
         PriceCurrencyInterface $priceCurrencyInterface,
-        MageCart $cart
+        CashondeliveryInterface $cashondeliveryInterface,
+        CheckoutSession $checkoutSession
     ) {
         $this->priceCurrencyInterface = $priceCurrencyInterface;
-        $this->cart = $cart;
+        $this->checkoutSession = $checkoutSession;
+        $this->cashondeliveryInterface = $cashondeliveryInterface;
     }
 
     /**
      * Get current quote
      * @return \Magento\Quote\Model\Quote
      */
-    protected function _getQuote()
+    protected function getQuote()
     {
-        if (is_null($this->_quote)) {
-            $this->_quote = $this->cart->getQuote();
-            $this->_quote->collectTotals();
+        if (is_null($this->quote)) {
+            $this->quote = $this->checkoutSession->getQuote();
+            $this->quote->collectTotals();
         }
         
-        return $this->_quote;
+        return $this->quote;
     }
 
     /**
@@ -58,7 +62,7 @@ class CashondeliveryCart implements CashondeliveryCartInterface
      */
     public function getAmount()
     {
-        return $this->_getQuote()->getMspCodAmount();
+        return $this->getQuote()->getMspCodAmount();
     }
 
     /**
@@ -67,7 +71,7 @@ class CashondeliveryCart implements CashondeliveryCartInterface
      */
     public function getBaseAmount()
     {
-        return $this->_getQuote()->getBaseMspCodAmount();
+        return $this->getQuote()->getBaseMspCodAmount();
     }
 
     /**
@@ -91,7 +95,7 @@ class CashondeliveryCart implements CashondeliveryCartInterface
      */
     public function getBaseTaxAmount()
     {
-        return $this->_getQuote()->getBaseMspCodTaxAmount();
+        return $this->getQuote()->getBaseMspCodTaxAmount();
     }
 
     /**
@@ -100,6 +104,6 @@ class CashondeliveryCart implements CashondeliveryCartInterface
      */
     public function getTaxAmount()
     {
-        return $this->_getQuote()->getMspCodTaxAmount();
+        return $this->getQuote()->getMspCodTaxAmount();
     }
 }

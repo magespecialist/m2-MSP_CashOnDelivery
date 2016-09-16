@@ -66,10 +66,14 @@ class Cashondelivery extends AbstractTotal
 
             $total->setBaseGrandTotal($total->getBaseGrandTotal() + $baseAmount);
             $total->setGrandTotal($total->getGrandTotal() + $amount);
-
-            $quote->setBaseMspCodAmount($baseAmount);
-            $quote->setMspCodAmount($amount);
         }
+
+        /*
+         * This must be always calculated despite the method selection.
+         * An empty value will result in a wrong fee preview on payment method.
+         */
+        $quote->setBaseMspCodAmount($baseAmount);
+        $quote->setMspCodAmount($amount);
 
         return $this;
     }

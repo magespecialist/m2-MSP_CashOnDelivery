@@ -50,7 +50,7 @@ class CashondeliveryTable extends AbstractDb
                     .'from_amount < '.doubleval($amount)
                 .')'
             )
-            ->order('from_amount')
+            ->order('from_amount desc')
             ->order(new \Zend_Db_Expr("country = '*'"))
             ->limit(1);
 

@@ -51,27 +51,32 @@ class CashondeliveryTax extends AbstractTotal
             return $this;
         }
 
-        $feeAmount = $total->getBaseTotalAmount('msp_cashondelivery');
+        $country = $quote->getShippingAddress()->getCountryModel()->getData('iso2_code');
+        $baseAmount = $this->cashOnDeliveryInterface->getBaseAmount($total->getAllBaseTotalAmounts(), $country);
 
-        $baseAmount = $this->cashOnDeliveryInterface->getBaseTaxAmount($feeAmount);
-        $amount = $this->priceCurrencyInterface->convert($baseAmount);
+        $baseTaxAmount = $this->cashOnDeliveryInterface->getBaseTaxAmount($baseAmount);
+        $taxAmount = $this->priceCurrencyInterface->convert($baseTaxAmount);
 
         if ($this->_canApplyTotal($quote)) {
-            $total->setBaseTotalAmount('msp_cashondelivery_tax', $baseAmount);
-            $total->setTotalAmount('msp_cashondelivery_tax', $amount);
+            $total->setBaseTotalAmount('msp_cashondelivery_tax', $baseTaxAmount);
+            $total->setTotalAmount('msp_cashondelivery_tax', $taxAmount);
 
-            $total->setBaseMspCodTaxAmount($baseAmount);
-            $total->setMspCodTaxAmount($amount);
+            $total->setBaseMspCodTaxAmount($baseTaxAmount);
+            $total->setMspCodTaxAmount($taxAmount);
 
-            $total->setBaseTaxAmount($total->getBaseTaxAmount() + $baseAmount);
-            $total->setTaxAmount($total->getTaxAmount() + $amount);
+            $total->setBaseTaxAmount($total->getBaseTaxAmount() + $baseTaxAmount);
+            $total->setTaxAmount($total->getTaxAmount() + $taxAmount);
 
-            $total->setBaseGrandTotal($total->getBaseGrandTotal() + $baseAmount);
-            $total->setGrandTotal($total->getGrandTotal() + $amount);
-
-            $quote->setBaseMspCodTaxAmount($baseAmount);
-            $quote->setMspCodTaxAmount($amount);
+            $total->setBaseGrandTotal($total->getBaseGrandTotal() + $baseTaxAmount);
+            $total->setGrandTotal($total->getGrandTotal() + $taxAmount);
         }
+
+        /*
+         * This must be always calculated despite the method selection.
+         * An empty value will result in a wrong fee preview on payment method.
+         */
+        $quote->setBaseMspCodTaxAmount($baseTaxAmount);
+        $quote->setMspCodTaxAmount($taxAmount);
 
         return $this;
     }

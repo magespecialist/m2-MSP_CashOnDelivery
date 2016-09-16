@@ -22,22 +22,22 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Sales:etc/sales.xsd">
     <section name="quote">
         <group name="totals">
-            <item name="msp_cashondelivery" instance="MSP\CashOnDelivery\Model\Total\Quote\Cashondelivery" sort_order="400"/>
-            <item name="msp_cashondelivery_tax" instance="MSP\CashOnDelivery\Model\Total\Quote\CashondeliveryTax" sort_order="401"/>
+            <item name="msp_cashondelivery" instance="MSP\CashOnDelivery\Model\Total\Quote\Cashondelivery" sort_order="900"/>
+            <item name="msp_cashondelivery_tax" instance="MSP\CashOnDelivery\Model\Total\Quote\CashondeliveryTax" sort_order="901"/>
         </group>
     </section>
 
     <section name="order_invoice">
         <group name="totals">
-            <item name="msp_cashondelivery" instance="MSP\CashOnDelivery\Model\Total\Invoice\Cashondelivery" sort_order="400"/>
-            <item name="msp_cashondelivery_tax" instance="MSP\CashOnDelivery\Model\Total\Invoice\CashondeliveryTax" sort_order="401"/>
+            <item name="msp_cashondelivery" instance="MSP\CashOnDelivery\Model\Total\Invoice\Cashondelivery" sort_order="900"/>
+            <item name="msp_cashondelivery_tax" instance="MSP\CashOnDelivery\Model\Total\Invoice\CashondeliveryTax" sort_order="901"/>
         </group>
     </section>
 
     <section name="order_creditmemo">
         <group name="totals">
-            <item name="msp_cashondelivery" instance="MSP\CashOnDelivery\Model\Total\Creditmemo\Cashondelivery" sort_order="400"/>
-            <item name="msp_cashondelivery_tax" instance="MSP\CashOnDelivery\Model\Total\Creditmemo\CashondeliveryTax" sort_order="401"/>
+            <item name="msp_cashondelivery" instance="MSP\CashOnDelivery\Model\Total\Creditmemo\Cashondelivery" sort_order="900"/>
+            <item name="msp_cashondelivery_tax" instance="MSP\CashOnDelivery\Model\Total\Creditmemo\CashondeliveryTax" sort_order="901"/>
         </group>
     </section>
 </config>

@@ -55,10 +55,9 @@ define(
 
                 fullScreenLoader.startLoader();
                 
-                if(customer.isLoggedIn()) {
+                if (customer.isLoggedIn()) {
                     serviceUrl = urlBuilder.createUrl('/carts/mine/selected-payment-method', {});
-                }
-                else {
+                } else {
                     serviceUrl = urlBuilder.createUrl('/guest-carts/:cartId/selected-payment-method', {
                         cartId: quote.getQuoteId()
                     });
@@ -92,8 +91,9 @@ define(
                     if (quote.paymentMethod().method != me.lastDetectedMethod) {
 
                         if (
-                            (quote.paymentMethod().method == 'msp_cashondelivery' || me.lastDetectedMethod == 'msp_cashondelivery')
-                            || (totals.getSegment('msp_cashondelivery') && me.lastDetectedMethod === null)
+                            (quote.paymentMethod().method == 'msp_cashondelivery') ||
+                            (me.lastDetectedMethod == 'msp_cashondelivery') ||
+                            (totals.getSegment('msp_cashondelivery') && (me.lastDetectedMethod === null))
                         ) {
                             me.refreshMethod();
                         }
