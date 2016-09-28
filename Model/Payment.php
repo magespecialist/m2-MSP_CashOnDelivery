@@ -29,7 +29,7 @@ class Payment extends AbstractMethod
     protected $_code = self::CODE;
 
     protected $_formBlockType = 'Magento\OfflinePayments\Block\Form\Checkmo';
-    protected $_infoBlockType = 'Magento\OfflinePayments\Block\Info\Checkmo';
+    protected $_infoBlockType = 'MSP\CashOnDelivery\Block\Info\CashOnDelivery';
 
     protected $_isOffline = true;
 }
