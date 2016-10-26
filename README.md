@@ -14,7 +14,7 @@ This module is a Cash On Delivery implementation for Magento2 allowing you to de
 
 ## Installing in your Magento
 
-* From your CLI run: `composer install msp/cashondelivery`
+* From your CLI run: ```composer require msp/cashondelivery```
 * Log-in your Magento backend
 * Go to Stores > Configuration > Sales > Payment Methods > Cash On Delivery
 * Configure Cash On Delivery according to your preferences
