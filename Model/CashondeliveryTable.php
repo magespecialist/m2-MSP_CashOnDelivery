@@ -34,7 +34,7 @@ class CashondeliveryTable extends AbstractModel implements CashondeliveryTableIn
     protected $filesystem;
     protected $file;
 
-    protected $_columns = ['country', 'from_amount', 'fee'];
+    protected $_columns = ['country', 'from_amount', 'fee', 'website'];
 
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -149,11 +149,21 @@ class CashondeliveryTable extends AbstractModel implements CashondeliveryTableIn
             for ($i=0; $i<count($headers); $i++) {
             // @codingStandardsIgnoreEnd
                 foreach ($this->_columns as $columnName) {
+
+                    // Optional columns
+                    if ($columnName == 'website') {
+                        if (!isset($csvLine[$columnsMap[$columnName]]) || !$csvLine[$columnsMap[$columnName]]) {
+                            $csvLine[$columnsMap[$columnName]] = '*';
+                        }
+                    }
+
                     $value = $csvLine[$columnsMap[$columnName]];
 
+                    // Mandatory columns
                     if ($columnName == 'fee') {
                         $dataRow['is_pct'] = (strpos($value, '%') !== false);
                         $value = floatval(str_replace('%', '', $value));
+
                     } else if ($columnName == 'from_amount') {
                         $value = floatval($value);
                     }
