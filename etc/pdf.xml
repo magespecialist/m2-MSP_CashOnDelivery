@@ -23,6 +23,7 @@
     <totals>
         <total name="msp_cashondelivery">
             <title translate="true">Cash on delivery amount</title>
+            <source_field>msp_cashondelivery</source_field>
             <model>MSP\CashOnDelivery\Model\Sales\Pdf\Amount</model>
             <font_size>7</font_size>
             <display_zero>false</display_zero>
@@ -30,6 +31,7 @@
         </total>
         <total name="msp_cashondelivery_tax">
             <title translate="true">Cash on delivery tax</title>
+            <source_field>msp_cashondelivery_tax</source_field>
             <model>MSP\CashOnDelivery\Model\Sales\Pdf\Tax</model>
             <font_size>7</font_size>
             <display_zero>false</display_zero>
