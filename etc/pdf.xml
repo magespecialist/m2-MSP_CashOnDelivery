@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * IDEALIAGroup srl
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@idealiagroup.com so we can send you a copy immediately.
+ *
+ * @category   MSP
+ * @package    MSP_CashOnDelivery
+ * @copyright  Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Sales:etc/pdf_file.xsd">
+    <totals>
+        <total name="msp_cashondelivery">
+            <title translate="true">Cash on delivery amount</title>
+            <source_field>msp_cashondelivery</source_field>
+            <model>MSP\CashOnDelivery\Model\Sales\Pdf\Amount</model>
+            <font_size>7</font_size>
+            <display_zero>false</display_zero>
+            <sort_order>150</sort_order>
+        </total>
+        <total name="msp_cashondelivery_tax">
+            <title translate="true">Cash on delivery tax</title>
+            <source_field>msp_cashondelivery_tax</source_field>
+            <model>MSP\CashOnDelivery\Model\Sales\Pdf\Tax</model>
+            <font_size>7</font_size>
+            <display_zero>false</display_zero>
+            <sort_order>151</sort_order>
+        </total>
+    </totals>
+</config>
