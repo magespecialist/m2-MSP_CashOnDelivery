@@ -20,9 +20,22 @@
 namespace MSP\CashOnDelivery\Model\ResourceModel;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+use Magento\Framework\Model\ResourceModel\Db\Context;
+use Magento\Store\Model\StoreManagerInterface;
 
 class CashondeliveryTable extends AbstractDb
 {
+    protected $storeManager;
+
+    public function __construct(
+        Context $context,
+        StoreManagerInterface $storeManager,
+        $connectionName = null
+    ) {
+        parent::__construct($context, $connectionName);
+        $this->storeManager = $storeManager;
+    }
+
     protected function _construct()
     {
         $this->_init('msp_cashondelivery_table', 'msp_cashondelivery_table_id');
@@ -39,6 +52,8 @@ class CashondeliveryTable extends AbstractDb
     {
         $table = $this->getMainTable();
 
+        $currentWebsite = $this->storeManager->getWebsite()->getCode();
+
         $connection = $this->getConnection();
         $qry = $connection->select()
             ->from($table, '*')
@@ -47,10 +62,15 @@ class CashondeliveryTable extends AbstractDb
                     .'country = '.$connection->quote($country).' OR '
                     .'country = '.$connection->quote('*')
                 .') AND ('
-                    .'from_amount < '.doubleval($amount)
+                    .'from_amount < '.doubleval($amount) . ' AND '
+                    .'('
+                        .'website = '.$connection->quote($currentWebsite).' OR '
+                        .'website = '.$connection->quote('*')
+                    .')'
                 .')'
             )
             ->order('from_amount desc')
+            ->order(new \Zend_Db_Expr("website = '*'"))
             ->order(new \Zend_Db_Expr("country = '*'"))
             ->limit(1);
 

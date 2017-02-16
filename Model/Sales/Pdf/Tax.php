@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<!--
+<?php
 /**
  * IDEALIAGroup srl
  *
@@ -18,17 +17,18 @@
  * @copyright  Copyright (c) 2016 IDEALIAGroup srl (http://www.idealiagroup.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
--->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="MSP_CashOnDelivery" setup_version="1.1.1">
-        <sequence>
-            <module name="Magento_Sales" />
-            <module name="Magento_Payment" />
-            <module name="Magento_Directory" />
-            <module name="Magento_Config" />
-            <module name="Magento_Quote"/>
-            <module name="Magento_Checkout"/>
-        </sequence>
-    </module>
-</config>
+
+namespace MSP\CashOnDelivery\Model\Sales\Pdf;
+
+class Tax extends \Magento\Sales\Model\Order\Pdf\Total\DefaultTotal
+{
+    /**
+     * Get Total amount from source
+     *
+     * @return float
+     */
+    public function getAmount()
+    {
+        return $this->getOrder()->getBaseMspCodTaxAmount();
+    }
+}
