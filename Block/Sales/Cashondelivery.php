@@ -53,7 +53,7 @@ class Cashondelivery extends Template
             ]
         );
 
-        $parent->addTotal($fee, 'msp_cashondelivery');
+        $parent->addTotalBefore($fee, 'grand_total');
 
         return $this;
     }
