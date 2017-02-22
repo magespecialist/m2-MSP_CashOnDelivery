@@ -22,6 +22,8 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
+    <preference for="Magento\Reports\Model\ResourceModel\Order\Collection" type="MSP\CashOnDelivery\Model\ResourceModel\Order\Collection"/>
+    
     <preference for="MSP\CashOnDelivery\Api\CashondeliveryInterface"
                 type="MSP\CashOnDelivery\Model\Cashondelivery" />
     <preference for="MSP\CashOnDelivery\Api\CashondeliveryCartInterface"
