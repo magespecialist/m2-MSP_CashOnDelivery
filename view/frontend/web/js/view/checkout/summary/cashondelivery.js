@@ -36,7 +36,7 @@ define(
             },
             totals: quote.getTotals(),
             isTaxDisplayedInGrandTotal: window.checkoutConfig.includeTaxInGrandTotal || false,
-            isDisplayed: function() {
+            isDisplayed: function () {
                 return this.isFullMode();
             },
             hasTotal: function () {
@@ -46,14 +46,14 @@ define(
 
                 return false;
             },
-            getValue: function() {
+            getValue: function () {
                 var price = 0;
                 if (this.hasTotal()) {
                     price = totals.getSegment('msp_cashondelivery').value;
                 }
                 return this.getFormattedPrice(price);
             },
-            getBaseValue: function() {
+            getBaseValue: function () {
                 var price = 0;
                 if (this.hasTotal()) {
                     price = totals.getSegment('msp_cashondelivery').value;

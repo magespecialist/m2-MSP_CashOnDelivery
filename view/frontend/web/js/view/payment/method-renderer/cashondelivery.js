@@ -69,7 +69,8 @@ define(
                 };
 
                 return storage.put(
-                    serviceUrl, JSON.stringify(payload)
+                    serviceUrl,
+                    JSON.stringify(payload)
                 ).done(function () {
                     cashondelivery.canShowCashOnDelivery(quote.paymentMethod().method == 'msp_cashondelivery');
                     getTotalsAction([]);
@@ -87,9 +88,8 @@ define(
                     me.extraFeeText(data.fee_label);
                 });
 
-                quote.paymentMethod.subscribe(function() {
+                quote.paymentMethod.subscribe(function () {
                     if (quote.paymentMethod().method != me.lastDetectedMethod) {
-
                         if (
                             (quote.paymentMethod().method == 'msp_cashondelivery') ||
                             (me.lastDetectedMethod == 'msp_cashondelivery') ||
