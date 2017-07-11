@@ -23,7 +23,6 @@ use Magento\Sales\Model\Order;
 
 class CashOnDelivery extends Info
 {
-
     protected function _prepareSpecificInformation($transport = null)
     {
         if (is_null($this->_paymentSpecificInformation)) {

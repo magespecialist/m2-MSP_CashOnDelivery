@@ -22,6 +22,7 @@ namespace MSP\CashOnDelivery\Block\Sales;
 
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\DataObject;
+use MSP\CashOnDelivery\Model\Payment;
 
 class Cashondelivery extends Template
 {
@@ -43,17 +44,20 @@ class Cashondelivery extends Template
         $parent = $this->getParentBlock();
 
         $this->_source = $parent->getSource();
+        $source = $this->getSource();
 
-        $fee = new DataObject(
-            [
-                'code' => 'msp_cashondelivery',
-                'strong' => false,
-                'value' => $this->getSource()->getBaseMspCodAmount() - $this->getSource()->getBaseMspCodTaxAmount(),
-                'label' => __('Cash on delivery'),
-            ]
-        );
+        if ($source->getPayment()->getMethod() == Payment::CODE) {
+            $fee = new DataObject(
+                [
+                    'code' => 'msp_cashondelivery',
+                    'strong' => false,
+                    'value' => $source->getBaseMspCodAmount() - $source->getBaseMspCodTaxAmount(),
+                    'label' => __('Cash on delivery'),
+                ]
+            );
 
-        $parent->addTotalBefore($fee, 'grand_total');
+            $parent->addTotalBefore($fee, 'grand_total');
+        }
 
         return $this;
     }
