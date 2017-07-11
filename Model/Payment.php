@@ -25,6 +25,7 @@ use Magento\Payment\Model\Method\AbstractMethod;
 class Payment extends AbstractMethod
 {
     const CODE = 'msp_cashondelivery';
+    const XML_PATH_EXCLUDE_REGIONS = 'payment/msp_cashondelivery/exclude_regions';
 
     protected $_code = self::CODE;
 
@@ -32,4 +33,20 @@ class Payment extends AbstractMethod
     protected $_infoBlockType = 'MSP\CashOnDelivery\Block\Info\CashOnDelivery';
 
     protected $_isOffline = true;
+
+    public function isAvailable(\Magento\Quote\Api\Data\CartInterface $quote = null)
+    {
+        if (!parent::isAvailable($quote)) {
+            return false;
+        }
+
+        $excludeRegions = explode(',', $this->_scopeConfig->getValue(static::XML_PATH_EXCLUDE_REGIONS));
+        foreach ($quote->getAllShippingAddresses() as $shippingAddress) {
+            if (in_array($shippingAddress->getRegionId(), $excludeRegions)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
