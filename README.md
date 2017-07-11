@@ -12,6 +12,7 @@ This module is a Cash On Delivery implementation for Magento2 allowing you to de
 * Fee per country / amount
 * Default fee fallback
 * Multi website support 
+* Specific regions limitation
 
 ## Installing in your Magento
 
