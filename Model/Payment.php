@@ -40,10 +40,14 @@ class Payment extends AbstractMethod
             return false;
         }
 
-        $excludeRegions = explode(',', $this->_scopeConfig->getValue(static::XML_PATH_EXCLUDE_REGIONS));
-        foreach ($quote->getAllShippingAddresses() as $shippingAddress) {
-            if (in_array($shippingAddress->getRegionId(), $excludeRegions)) {
-                return false;
+        $excludeRegions = $this->_scopeConfig->getValue(static::XML_PATH_EXCLUDE_REGIONS);
+
+        if(!empty($excludeRegions)) {
+            $excludeRegions = explode(',', $excludeRegions);
+            foreach ($quote->getAllShippingAddresses() as $shippingAddress) {
+                if (in_array($shippingAddress->getRegionId(), $excludeRegions)) {
+                    return false;
+                }
             }
         }
 
