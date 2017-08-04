@@ -22,6 +22,8 @@ namespace MSP\CashOnDelivery\Block\Sales;
 
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\DataObject;
+use Magento\Sales\Api\Data\InvoiceInterface;
+use Magento\Sales\Api\Data\OrderInterface;
 use MSP\CashOnDelivery\Model\Payment;
 
 class Cashondelivery extends Template
@@ -46,7 +48,8 @@ class Cashondelivery extends Template
         $this->_source = $parent->getSource();
         $source = $this->getSource();
 
-        if ($source->getPayment()->getMethod() == Payment::CODE) {
+
+        if ($this->getPayment($source)->getMethod() == Payment::CODE) {
             $fee = new DataObject(
                 [
                     'code' => 'msp_cashondelivery',
@@ -60,5 +63,18 @@ class Cashondelivery extends Template
         }
 
         return $this;
+    }
+
+    protected function getPayment($source)
+    {
+        if($source instanceof InvoiceInterface) {
+            return $source->getOrder()->getPayment();
+        }
+
+        if($source instanceof OrderInterface) {
+            return $source;
+        }
+
+
     }
 }
