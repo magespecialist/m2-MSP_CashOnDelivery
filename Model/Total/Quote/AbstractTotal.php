@@ -20,12 +20,22 @@
 
 namespace MSP\CashOnDelivery\Model\Total\Quote;
 
+use Magento\Quote\Api\PaymentMethodManagementInterface;
 use Magento\Quote\Model\Quote\Address\Total\AbstractTotal as MageAbstractTotal;
-use Magento\Quote\Model\Quote\Address\Total;
 use Magento\Quote\Model\Quote;
 
 abstract class AbstractTotal extends MageAbstractTotal
 {
+    /**
+     * @var PaymentMethodManagementInterface
+     */
+    private $paymentMethodManagement;
+
+    public function __construct(PaymentMethodManagementInterface $paymentMethodManagement)
+    {
+        $this->paymentMethodManagement = $paymentMethodManagement;
+    }
+
     /**
      * Return true if can apply totals
      * @param Quote $quote
@@ -33,6 +43,15 @@ abstract class AbstractTotal extends MageAbstractTotal
      */
     protected function _canApplyTotal(Quote $quote)
     {
+        // FIX bug issue #29
+        if (!$quote->getId()) {
+            return false;
+        }
+        $paymentMethodsList = $this->paymentMethodManagement->getList($quote->getId());
+        if ((count($paymentMethodsList) == 1) && ($paymentMethodsList[0]->getCode() == 'msp_cashondelivery')) {
+            return true;
+        }
+
         return ($quote->getPayment()->getMethod() == 'msp_cashondelivery');
     }
 }
