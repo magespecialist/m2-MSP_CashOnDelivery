@@ -65,14 +65,14 @@ class InstallSchema implements InstallSchemaInterface
                 Table::TYPE_DECIMAL,
                 '10,4',
                 [],
-                'From amount'
+                'Fee'
             )
             ->addColumn(
                 'is_pct',
                 Table::TYPE_BOOLEAN,
                 null,
                 [],
-                'From amount'
+                'Is fee percetage?'
             );
 
         $setup->getConnection()->createTable($table);
