@@ -52,7 +52,7 @@ class CashondeliveryCart implements CashondeliveryCartInterface
             $this->quote = $this->checkoutSession->getQuote();
             $this->quote->collectTotals();
         }
-        
+
         return $this->quote;
     }
 
@@ -82,6 +82,11 @@ class CashondeliveryCart implements CashondeliveryCartInterface
     {
         $amount = $this->getAmount();
         $taxAmount = $this->getTaxAmount();
+
+        // Need not display label if extra fee is zero
+        if ($amount == 0 && $taxAmount == 0) {
+            return '';
+        }
 
         return __('You will be charged by an extra fee of %1 (+%2 taxes)', [
             $this->priceCurrencyInterface->format($amount),
