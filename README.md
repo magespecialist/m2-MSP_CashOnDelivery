@@ -1,6 +1,6 @@
 # Cash On Delivery for Magento 2
 
-This module is a Cash On Delivery implementation for Magento2 allowing you to define an additional fee based on destination country and total amount.
+This module is a Cash On Delivery implementation for Magento2 allowing you to define an additional fee based on destination country, region and total amount.
 
 <img src="https://github.com/magespecialist/m2-MSP_CashOnDlivery/blob/master/screenshots/screen4.png" />
 
@@ -9,10 +9,10 @@ This module is a Cash On Delivery implementation for Magento2 allowing you to de
 * Multiple currencies allowed
 * Multi store allowed
 * Percent or static fee supported
-* Fee per country / amount
+* Fee per country / region / amount
 * Default fee fallback
-* Multi website support 
-* Specific regions limitation
+* Multi website support
+* Exclude specific regions
 
 ## Installing in your Magento
 
@@ -36,9 +36,10 @@ This module is a Cash On Delivery implementation for Magento2 allowing you to de
 
 ### CSV syntax
 
-MSP Cash On Delivery CSV file syntax is really simple. You have 3 columns: **country**, **from_amount**, **fee**
+MSP Cash On Delivery CSV file syntax is really simple. You have 5 columns: **country**, **region**, **from_amount**, **fee**, **website**
 
 * **country**: ISO 2 letters country code. Use * as wildcard to indicate all countries
+* **region**: Region name. Use * as wildcard to indicate all regions
 * **from_amount**: Indicates the minimum amount to apply the additional fee
 * **fee**: The fee to apply (in base currency). Adding **%** after the fee indicates a percent value
 * **website**: Magento website code (e.g.: *base*). Use * as wildcard to indicate all websites

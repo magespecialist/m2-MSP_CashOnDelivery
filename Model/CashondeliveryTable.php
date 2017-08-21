@@ -127,7 +127,7 @@ class CashondeliveryTable extends AbstractModel implements CashondeliveryTableIn
         $stream = $tmpDirectory->openFile($path);
 
         $headers = $stream->readCsv();
-        if ($headers === false || count($headers) < 4) {
+        if ($headers === false || count($headers) < 5) {
             $stream->close();
             throw new LocalizedException(__('Invalid columns count.'));
         }
