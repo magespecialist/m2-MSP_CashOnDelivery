@@ -31,9 +31,10 @@ interface CashondeliveryInterface
      * Get base amount
      * @param array $totals
      * @param string $country
+     * @param string $region
      * @return double
      */
-    public function getBaseAmount(array $totals, $country);
+    public function getBaseAmount(array $totals, $country, $region);
 
     /**
      * Get base tax amount

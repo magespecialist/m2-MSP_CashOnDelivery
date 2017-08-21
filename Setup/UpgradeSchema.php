@@ -22,6 +22,20 @@ class UpgradeSchema implements UpgradeSchemaInterface
         ]);
     }
 
+    protected function addRegionColumn(SchemaSetupInterface $setup)
+    {
+        $tableName = $setup->getTable('msp_cashondelivery_table');
+        $setup->getConnection()->addColumn($tableName, 'region', [
+            'type' => Table::TYPE_TEXT,
+            'nullable' => false,
+            'comment' => 'Region ID',
+        ]);
+
+        $setup->getConnection()->update($tableName, [
+            'region' => '*',
+        ]);
+    }
+
     /**
      * Upgrades DB schema for a module
      *
@@ -35,6 +49,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
         if (version_compare($context->getVersion(), '1.1.0') < 0) {
             $this->upgradeTo110($setup);
+        }
+
+        if (version_compare($context->getVersion(), '1.1.9') < 0) {
+            $this->addRegionColumn($setup);
         }
 
         $setup->endSetup();

@@ -46,9 +46,10 @@ class CashondeliveryTable extends AbstractDb
      *
      * @param double $amount
      * @param string $country
+     * @param string $region
      * @return double
      */
-    public function getFee($amount, $country)
+    public function getFee($amount, $country, $region)
     {
         $table = $this->getMainTable();
 
@@ -62,16 +63,19 @@ class CashondeliveryTable extends AbstractDb
                     .'country = '.$connection->quote($country).' OR '
                     .'country = '.$connection->quote('*')
                 .') AND ('
-                    .'from_amount < '.doubleval($amount) . ' AND '
-                    .'('
+                    .'region = '.$connection->quote($region).' OR '
+                    .'region = '.$connection->quote('*')
+                .') AND ('
+                    .'from_amount < '.doubleval($amount).' AND ('
                         .'website = '.$connection->quote($currentWebsite).' OR '
                         .'website = '.$connection->quote('*')
-                    .')'
+                   .')'
                 .')'
             )
             ->order('from_amount desc')
             ->order(new \Zend_Db_Expr("website = '*'"))
             ->order(new \Zend_Db_Expr("country = '*'"))
+            ->order(new \Zend_Db_Expr("region = '*'"))
             ->limit(1);
 
         $row = $connection->fetchRow($qry);
