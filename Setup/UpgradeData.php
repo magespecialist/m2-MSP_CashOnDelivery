@@ -45,7 +45,7 @@ class UpgradeData implements UpgradeDataInterface
      * @param ModuleDataSetupInterface $setup
      * @return void
      */
-    protected function upgradeTo100(ModuleDataSetupInterface $setup)
+    protected function upgradeTo010000(ModuleDataSetupInterface $setup)
     {
         $attributes = [
             'msp_cod_amount' => 'Cash On Delivery Amount',
@@ -61,6 +61,19 @@ class UpgradeData implements UpgradeDataInterface
         }
     }
 
+    /**
+     * Upgrade to version 1.2.0
+     * @param ModuleDataSetupInterface $setup
+     * @return void
+     */
+    protected function upgradeTo010200(ModuleDataSetupInterface $setup)
+    {
+        $tableName = $setup->getTable('msp_cashondelivery_table');
+        $setup->getConnection()->update($tableName, [
+            'region' => '*',
+        ]);
+    }
+
 
     /**
      * Upgrades data for a module
@@ -74,7 +87,11 @@ class UpgradeData implements UpgradeDataInterface
         $setup->startSetup();
 
         if (version_compare($context->getVersion(), '1.0.0') < 0) {
-            $this->upgradeTo100($setup);
+            $this->upgradeTo010000($setup);
+        }
+
+        if (version_compare($context->getVersion(), '1.2.0') < 0) {
+            $this->upgradeTo010200($setup);
         }
 
         $setup->endSetup();
