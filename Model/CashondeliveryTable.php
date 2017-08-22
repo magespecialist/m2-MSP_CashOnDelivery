@@ -34,7 +34,7 @@ class CashondeliveryTable extends AbstractModel implements CashondeliveryTableIn
     protected $filesystem;
     protected $file;
 
-    protected $_columns = ['country', 'from_amount', 'fee', 'website'];
+    protected $_columns = ['country', 'region', 'from_amount', 'fee', 'website'];
 
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -62,11 +62,12 @@ class CashondeliveryTable extends AbstractModel implements CashondeliveryTableIn
      *
      * @param double $amount
      * @param string $country
+     * @param string $region
      * @return double
      */
-    public function getFee($amount, $country)
+    public function getFee($amount, $country, $region)
     {
-        return $this->_getResource()->getFee($amount, $country);
+        return $this->_getResource()->getFee($amount, $country, $region);
     }
 
     /**
@@ -126,7 +127,7 @@ class CashondeliveryTable extends AbstractModel implements CashondeliveryTableIn
         $stream = $tmpDirectory->openFile($path);
 
         $headers = $stream->readCsv();
-        if ($headers === false || count($headers) < 3) {
+        if ($headers === false || count($headers) < 5) {
             $stream->close();
             throw new LocalizedException(__('Invalid columns count.'));
         }

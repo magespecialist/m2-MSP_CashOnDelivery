@@ -8,7 +8,7 @@ use Magento\Framework\Setup\UpgradeSchemaInterface;
 
 class UpgradeSchema implements UpgradeSchemaInterface
 {
-    protected function upgradeTo110(SchemaSetupInterface $setup)
+    protected function upgradeTo010100(SchemaSetupInterface $setup)
     {
         $tableName = $setup->getTable('msp_cashondelivery_table');
         $setup->getConnection()->addColumn($tableName, 'website', [
@@ -19,6 +19,16 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
         $setup->getConnection()->update($tableName, [
             'website' => '*',
+        ]);
+    }
+
+    protected function upgradeTo010200(SchemaSetupInterface $setup)
+    {
+        $tableName = $setup->getTable('msp_cashondelivery_table');
+        $setup->getConnection()->addColumn($tableName, 'region', [
+            'type' => Table::TYPE_TEXT,
+            'nullable' => false,
+            'comment' => 'Region ID',
         ]);
     }
 
@@ -34,7 +44,11 @@ class UpgradeSchema implements UpgradeSchemaInterface
         $setup->startSetup();
 
         if (version_compare($context->getVersion(), '1.1.0') < 0) {
-            $this->upgradeTo110($setup);
+            $this->upgradeTo010100($setup);
+        }
+
+        if (version_compare($context->getVersion(), '1.2.0') < 0) {
+            $this->upgradeTo010200($setup);
         }
 
         $setup->endSetup();

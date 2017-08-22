@@ -32,9 +32,10 @@ interface CashondeliveryTableInterface
      *
      * @param double $amount
      * @param string $country
+     * @param string $region
      * @return double
      */
-    public function getFee($amount, $country);
+    public function getFee($amount, $country, $region);
 
     /**
      * Get table as array

@@ -57,8 +57,9 @@ class Cashondelivery extends AbstractTotal
         }
 
         $country = $quote->getShippingAddress()->getCountryModel()->getData('iso2_code');
+        $region = $quote->getShippingAddress()->getRegion();
 
-        $baseAmount = $this->cashOnDeliveryInterface->getBaseAmount($total->getAllBaseTotalAmounts(), $country);
+        $baseAmount = $this->cashOnDeliveryInterface->getBaseAmount($total->getAllBaseTotalAmounts(), $country, $region);
         $amount = $this->priceCurrencyInterface->convert($baseAmount);
 
         if ($this->_canApplyTotal($quote)) {
