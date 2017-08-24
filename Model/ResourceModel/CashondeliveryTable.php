@@ -51,6 +51,14 @@ class CashondeliveryTable extends AbstractDb
      */
     public function getFee($amount, $country, $region)
     {
+        if (!$country) {
+            $country = '';
+        }
+
+        if (!$region) {
+            $region = '';
+        }
+
         $table = $this->getMainTable();
 
         $currentWebsite = $this->storeManager->getWebsite()->getCode();
