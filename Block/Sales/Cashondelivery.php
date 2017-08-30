@@ -22,6 +22,7 @@ namespace MSP\CashOnDelivery\Block\Sales;
 
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\DataObject;
+use Magento\Sales\Api\Data\CreditmemoInterface;
 use Magento\Sales\Api\Data\InvoiceInterface;
 use Magento\Sales\Api\Data\OrderInterface;
 use MSP\CashOnDelivery\Model\Payment;
@@ -75,6 +76,8 @@ class Cashondelivery extends Template
             return $source;
         }
 
-
+        if($source instanceof CreditMemoInterface) {
+            return $source->getOrder()->getPayment();
+        }
     }
 }
