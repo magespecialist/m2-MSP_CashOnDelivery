@@ -73,7 +73,7 @@ class Cashondelivery extends Template
         }
 
         if($source instanceof OrderInterface) {
-            return $source;
+            return $source->getPayment();
         }
 
         if($source instanceof CreditMemoInterface) {
