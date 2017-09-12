@@ -25,21 +25,21 @@ class CashOnDelivery extends Info
 {
     protected function _prepareSpecificInformation($transport = null)
     {
-        if (is_null($this->_paymentSpecificInformation)) {
-            $transport = parent::_prepareSpecificInformation($transport);
-            $data = [];
-
-            /** @var Order $order */
-            $order = $this->getInfo()->getOrder();
-
-            $taxes = $order->getMspCodTaxAmount();
-            $amount = $order->getMspCodAmount() - $taxes;
-
-            $data[(string) __("Cash On Delivery Amount")] = $order->getOrderCurrency()->formatPrecision($amount, 2, [], false);
-            $data[(string) __("Cash On Delivery Tax")] = $order->getOrderCurrency()->formatPrecision($taxes, 2, [], false);
-
-            $this->_paymentSpecificInformation = $transport->setData(array_merge($data, $transport->getData()));
-        }
+//        if (is_null($this->_paymentSpecificInformation)) {
+//            $transport = parent::_prepareSpecificInformation($transport);
+//            $data = [];
+//
+//            /** @var Order $order */
+//            $order = $this->getInfo()->getOrder();
+//
+//            $taxes = $order->getMspCodTaxAmount();
+//            $amount = $order->getMspCodAmount() - $taxes;
+//
+//            $data[(string) __("Cash On Delivery Amount")] = $order->getOrderCurrency()->formatPrecision($amount, 2, [], false);
+//            $data[(string) __("Cash On Delivery Tax")] = $order->getOrderCurrency()->formatPrecision($taxes, 2, [], false);
+//
+//            $this->_paymentSpecificInformation = $transport->setData(array_merge($data, $transport->getData()));
+//        }
 
         return $this->_paymentSpecificInformation;
     }
