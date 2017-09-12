@@ -70,9 +70,6 @@ class Cashondelivery extends AbstractTotal
             $total->setBaseTotalAmount('msp_cashondelivery', $baseAmount);
             $total->setTotalAmount('msp_cashondelivery', $amount);
 
-            $total->setBaseMspCodAmount($baseAmount);
-            $total->setMspCodAmount($amount);
-
             $total->setBaseGrandTotal($total->getBaseGrandTotal() + $baseAmount);
             $total->setGrandTotal($total->getGrandTotal() + $amount);
         }

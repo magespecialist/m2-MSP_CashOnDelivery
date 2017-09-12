@@ -70,9 +70,6 @@ class CashondeliveryTax extends AbstractTotal
             $total->setBaseTotalAmount('msp_cashondelivery_tax', $baseTaxAmount);
             $total->setTotalAmount('msp_cashondelivery_tax', $taxAmount);
 
-            $total->setBaseMspCodTaxAmount($baseTaxAmount);
-            $total->setMspCodTaxAmount($taxAmount);
-
             $total->setBaseTaxAmount($total->getBaseTaxAmount() + $baseTaxAmount);
             $total->setTaxAmount($total->getTaxAmount() + $taxAmount);
 
