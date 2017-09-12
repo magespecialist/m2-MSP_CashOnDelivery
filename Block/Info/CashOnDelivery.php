@@ -25,6 +25,8 @@ class CashOnDelivery extends Info
 {
     protected function _prepareSpecificInformation($transport = null)
     {
+        return parent::_prepareSpecificInformation($transport);
+
 //        if (is_null($this->_paymentSpecificInformation)) {
 //            $transport = parent::_prepareSpecificInformation($transport);
 //            $data = [];
@@ -40,7 +42,7 @@ class CashOnDelivery extends Info
 //
 //            $this->_paymentSpecificInformation = $transport->setData(array_merge($data, $transport->getData()));
 //        }
-
-        return $this->_paymentSpecificInformation;
+//
+//        return $this->_paymentSpecificInformation;
     }
 }
