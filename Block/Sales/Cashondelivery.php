@@ -29,14 +29,6 @@ use MSP\CashOnDelivery\Model\Payment;
 
 class Cashondelivery extends Template
 {
-    protected $_source;
-    protected $_order;
-
-    public function getSource()
-    {
-        return $this->_source;
-    }
-
     public function displayFullSummary()
     {
         return true;
@@ -45,12 +37,10 @@ class Cashondelivery extends Template
     public function initTotals()
     {
         $parent = $this->getParentBlock();
+        $source = $parent->getSource();
 
-        $this->_source = $parent->getSource();
-        $source = $this->getSource();
-
-
-        if ($this->getPayment($source)->getMethod() == Payment::CODE) {
+        $payment = $this->getPayment($source);
+        if ($payment && ($payment->getMethod() == Payment::CODE)) {
             $fee = new DataObject(
                 [
                     'code' => 'msp_cashondelivery',
@@ -68,16 +58,18 @@ class Cashondelivery extends Template
 
     protected function getPayment($source)
     {
-        if($source instanceof InvoiceInterface) {
+        if ($source instanceof InvoiceInterface) {
             return $source->getOrder()->getPayment();
         }
 
-        if($source instanceof OrderInterface) {
+        if ($source instanceof OrderInterface) {
             return $source->getPayment();
         }
 
-        if($source instanceof CreditMemoInterface) {
+        if ($source instanceof CreditMemoInterface) {
             return $source->getOrder()->getPayment();
         }
+
+        return null;
     }
 }
