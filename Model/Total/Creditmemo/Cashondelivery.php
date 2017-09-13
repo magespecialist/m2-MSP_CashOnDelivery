@@ -20,8 +20,6 @@
 
 namespace MSP\CashOnDelivery\Model\Total\Creditmemo;
 
-use Magento\Quote\Model\Quote\Address\Total;
-use Magento\Quote\Model\Quote;
 use Magento\Sales\Model\Order\Creditmemo;
 
 class Cashondelivery extends AbstractTotal
