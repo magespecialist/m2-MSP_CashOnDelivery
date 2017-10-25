@@ -42,7 +42,7 @@ class Payment extends AbstractMethod
 
         $excludeRegions = $this->_scopeConfig->getValue(static::XML_PATH_EXCLUDE_REGIONS);
 
-        if(!empty($excludeRegions)) {
+        if (!empty($excludeRegions)) {
             $excludeRegions = explode(',', $excludeRegions);
             foreach ($quote->getAllShippingAddresses() as $shippingAddress) {
                 if (in_array($shippingAddress->getRegionId(), $excludeRegions)) {

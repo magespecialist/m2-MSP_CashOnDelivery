@@ -36,7 +36,7 @@
                 </field>
                 <field id="order_status" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>New Order Status</label>
-                    <source_model>Magento\Sales\Model\Config\Source\Order\Status\NewStatus</source_model>
+                    <source_model>Magento\Sales\Model\Config\Source\Order\Status\Newprocessing</source_model>
                 </field>
                 <field id="allowspecific" translate="label" type="allowspecific" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Payment from Applicable Countries</label>

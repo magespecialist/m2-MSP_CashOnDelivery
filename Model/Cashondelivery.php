@@ -136,7 +136,6 @@ class Cashondelivery implements CashondeliveryInterface
         return $this->objectManagerInterface->get('MSP\CashOnDelivery\Api\CashondeliveryCartInterface');
     }
 
-
     /**
      * @return \Magento\Tax\Api\Data\TaxRateInterface
      */

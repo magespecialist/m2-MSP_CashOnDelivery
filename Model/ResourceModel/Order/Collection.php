@@ -119,7 +119,7 @@ class Collection extends \Magento\Reports\Model\ResourceModel\Order\Collection
 
     /**
      * Get sales amount expression
-     * Here i added the last to arguments to the expression 
+     * Here i added the last to arguments to the expression
      * to subtract the cash on deliry and the tax amount form the total revenue
      *
      * @return string
@@ -156,5 +156,4 @@ class Collection extends \Magento\Reports\Model\ResourceModel\Order\Collection
 
         return $this->_salesAmountExpression;
     }
-
 }

@@ -150,7 +150,6 @@ class CashondeliveryTable extends AbstractModel implements CashondeliveryTableIn
             for ($i=0; $i<count($headers); $i++) {
             // @codingStandardsIgnoreEnd
                 foreach ($this->_columns as $columnName) {
-
                     // Optional columns
                     if ($columnName == 'website') {
                         if (!isset($csvLine[$columnsMap[$columnName]]) || !$csvLine[$columnsMap[$columnName]]) {
@@ -164,8 +163,7 @@ class CashondeliveryTable extends AbstractModel implements CashondeliveryTableIn
                     if ($columnName == 'fee') {
                         $dataRow['is_pct'] = (strpos($value, '%') !== false);
                         $value = floatval(str_replace('%', '', $value));
-
-                    } else if ($columnName == 'from_amount') {
+                    } elseif ($columnName == 'from_amount') {
                         $value = floatval($value);
                     }
 
