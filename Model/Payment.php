@@ -40,6 +40,10 @@ class Payment extends AbstractMethod
             return false;
         }
 
+				if ($quote->getItemVirtualQty() > 0) {
+            return false; //can't use this method if cart contains virtual products
+        }
+
         $excludeRegions = $this->_scopeConfig->getValue(static::XML_PATH_EXCLUDE_REGIONS);
 
         if (!empty($excludeRegions)) {
