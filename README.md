@@ -2,7 +2,7 @@
 
 # IMPORTANT NOTICE:
 
-This module has been moved under the responsability of "it4mage" group.
+This module has been moved under the responsibility of "it4mage" group.
 Please check this URL: https://github.com/it4mage/CashOnDelivery .
 
 # Cash On Delivery for Magento 2
