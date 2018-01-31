@@ -48,7 +48,7 @@ abstract class AbstractTotal extends MageAbstractTotal
             return false;
         }
         $paymentMethodsList = $this->paymentMethodManagement->getList($quote->getId());
-        if ((count($paymentMethodsList) == 1) && ($paymentMethodsList[0]->getCode() == 'msp_cashondelivery')) {
+        if ((count($paymentMethodsList) == 1) && (current($paymentMethodsList)->getCode() == 'msp_cashondelivery')) {
             return true;
         }
 
