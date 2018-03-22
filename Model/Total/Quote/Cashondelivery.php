@@ -67,8 +67,10 @@ class Cashondelivery extends AbstractTotal
         $totalAmounts = $total->getAllBaseTotalAmounts();
         if ($totalAmounts) {
             $baseAmount = $this->cashOnDeliveryInterface->getBaseAmount($totalAmounts, $country, $region);
+            $baseTaxAmount = $baseAmount - $this->cashOnDeliveryInterface->getBaseTaxAmount($baseAmount);
         }
         $amount = $this->priceCurrencyInterface->convert($baseAmount);
+        $TaxAmount = $this->priceCurrencyInterface->convert($baseTaxAmount);      
 
         if ($this->_canApplyTotal($quote)) {
             $total->setBaseTotalAmount('msp_cashondelivery', $baseAmount);
@@ -76,9 +78,9 @@ class Cashondelivery extends AbstractTotal
 
             $total->setBaseMspCodAmount($baseAmount);
             $total->setMspCodAmount($amount);
-
-            $total->setBaseGrandTotal($total->getBaseGrandTotal() + $baseAmount);
-            $total->setGrandTotal($total->getGrandTotal() + $amount);
+          
+            $total->setBaseGrandTotal($total->getBaseGrandTotal() + $baseTaxAmount);
+            $total->setGrandTotal($total->getGrandTotal() + $TaxAmount );
         }
 
         /*
